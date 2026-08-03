@@ -54,7 +54,6 @@ function MainLayout() {
           searchQuery={appState.searchQuery}
           setSearchQuery={appState.setSearchQuery}
           handleLogout={appState.handleLogout}
-          handleMakeAdmin={appState.handleMakeAdmin}
         />
       )}
 
@@ -107,7 +106,6 @@ function MainLayout() {
         authFormData={appState.authFormData}
         setAuthFormData={appState.setAuthFormData}
         handleLoginSubmit={appState.handleLoginSubmit}
-        handleDemoLogin={appState.handleDemoLogin}
       />
 
       <CartModal

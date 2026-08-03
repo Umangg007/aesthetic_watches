@@ -295,37 +295,10 @@ export function useAppState() {
     }
   };
 
-  const handleDemoLogin = () => {
-    const demoUser: User = { name: 'Pranshav Rathod', email: 'pranshav.rathod@dharohar.com', phone: '+91 98250 12345' };
-    setUser(demoUser);
-    setShippingAddress({ fullName: 'Pranshav Rathod', mobileNumber: '+91 98250 12345', pincode: '380015', flatAddress: '702, Heritage Heights, Satellite Road', landmark: 'Opp. Iskcon Temple', city: 'Ahmedabad', state: 'Gujarat', deliveryNotes: 'Ring doorbell upon arrival.' });
-    setIsAuthModalOpen(false);
-    setToastMessage('Signed in as Demo User: Pranshav Rathod');
-    setTimeout(() => setToastMessage(''), 3000);
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('dharohar_token');
     setUser(null);
     setToastMessage('Signed out successfully.');
-    setTimeout(() => setToastMessage(''), 3000);
-  };
-
-  const handleMakeAdmin = async () => {
-    if (!user) return;
-    try {
-      const token = localStorage.getItem('dharohar_token');
-      if (token) {
-        await fetch('/api/auth/make-admin', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-      }
-    } catch (err) {
-      console.error(err);
-    }
-    setUser({ ...user, role: 'admin' });
-    setToastMessage('You have been granted Admin privileges!');
     setTimeout(() => setToastMessage(''), 3000);
   };
 
@@ -434,9 +407,7 @@ export function useAppState() {
     updateQuantity,
     removeFromCart,
     handleLoginSubmit,
-    handleDemoLogin,
     handleLogout,
-    handleMakeAdmin,
     startCheckout,
     handleCompleteOrder,
   };

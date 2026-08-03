@@ -10,12 +10,11 @@ interface AuthModalProps {
   authFormData: AuthFormData;
   setAuthFormData: (f: AuthFormData) => void;
   handleLoginSubmit: (e: React.FormEvent) => void;
-  handleDemoLogin: () => void;
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({
   isOpen, onClose, authTab, setAuthTab,
-  authFormData, setAuthFormData, handleLoginSubmit, handleDemoLogin
+  authFormData, setAuthFormData, handleLoginSubmit
 }) => {
   if (!isOpen) return null;
   return (
@@ -79,12 +78,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             {authTab === 'login' ? 'Sign In to Account' : 'Register Collector Profile'}
           </button>
         </form>
-        <div className="mt-6 pt-4 border-t border-white/10 text-center">
-          <span className="text-stone-500 text-xs block mb-3">Or continue quickly with</span>
-          <button onClick={handleDemoLogin} className="w-full bg-stone-800 hover:bg-stone-700 text-amber-400 border border-amber-600/30 font-medium py-2.5 rounded-lg text-xs transition-colors flex items-center justify-center gap-2">
-            <User size={16} /> Quick Demo Login (Pranshav Rathod)
-          </button>
-        </div>
       </div>
     </div>
   );

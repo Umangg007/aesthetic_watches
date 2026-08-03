@@ -17,14 +17,13 @@ interface NavbarProps {
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   handleLogout: () => void;
-  handleMakeAdmin: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
   logoError, setLogoError,
   isMenuOpen, setIsMenuOpen, cartItemCount, user,
   setIsCartOpen, setIsAuthModalOpen, handleOpenContactModal, productList,
-  searchQuery, setSearchQuery, handleLogout, handleMakeAdmin
+  searchQuery, setSearchQuery, handleLogout
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -133,11 +132,6 @@ const Navbar: React.FC<NavbarProps> = ({
                     <Shield size={14} />
                   </Link>
                 )}
-                {user.role !== 'admin' && (
-                  <button onClick={handleMakeAdmin} className="text-stone-500 hover:text-amber-500 transition-colors" title="Make me Admin (Demo)">
-                    <Shield size={15} />
-                  </button>
-                )}
                 <button onClick={handleLogout} className="text-stone-400 hover:text-white transition-colors" title="Sign Out">
                   <LogOut size={15} />
                 </button>
@@ -238,14 +232,6 @@ const Navbar: React.FC<NavbarProps> = ({
                   >
                     <Shield size={14} /> Admin Dashboard
                   </Link>
-                )}
-                {user.role !== 'admin' && (
-                  <button
-                    onClick={() => { setIsMenuOpen(false); handleMakeAdmin(); }}
-                    className="w-full flex items-center justify-center gap-2 bg-stone-900 border border-stone-800 text-stone-300 hover:text-amber-400 px-4 py-3 rounded-lg text-xs tracking-widest font-bold uppercase mt-2 transition-colors"
-                  >
-                    <Shield size={14} /> Make Me Admin
-                  </button>
                 )}
                 <button
                   onClick={() => { setIsMenuOpen(false); handleLogout(); }}
