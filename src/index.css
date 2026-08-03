@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-stone-950 text-stone-300 antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Hero-level titles — Cinzel for that monumental, carved feel */
+  h1 {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.02em;
+  }
+
+  /* Section headings — Cormorant Garamond for elegance */
+  h2, h3, h4 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* .font-serif utility → Cormorant Garamond */
+  .font-serif {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* .font-cinzel → Cinzel for labels that need the carved look */
+  .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom Scrollbar for Admin Area */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(28, 25, 23, 0.5); /* stone-950 */
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(245, 158, 11, 0.2); /* amber-500 light */
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 158, 11, 0.5); /* amber-500 stronger */
+}
