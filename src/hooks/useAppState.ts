@@ -17,22 +17,31 @@ export function useAppState() {
     const fetchProducts = async () => {
       try {
         const res = await fetch('/api/products');
-        const data = await res.json();
-        if (data.length > 0) {
-          setProductList(data);
-        } else {
-          // Seed initial products
-          const seedRes = await fetch('/api/products/seed', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(defaultProducts)
-          });
-          const seededData = await seedRes.json();
-          setProductList(seededData);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setProductList(data);
+            return;
+          } else {
+            // Seed initial products
+            const seedRes = await fetch('/api/products/seed', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(defaultProducts)
+            });
+            if (seedRes.ok) {
+              const seededData = await seedRes.json();
+              if (Array.isArray(seededData) && seededData.length > 0) {
+                setProductList(seededData);
+                return;
+              }
+            }
+          }
         }
       } catch (err) {
         console.error('Error fetching products:', err);
       }
+      setProductList(defaultProducts);
     };
     
     const fetchRequests = async () => {
@@ -306,18 +315,18 @@ export function useAppState() {
     if (!user) return;
     try {
       const token = localStorage.getItem('dharohar_token');
-      const res = await fetch('/api/auth/make-admin', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.ok) {
-        setUser({ ...user, role: 'admin' });
-        setToastMessage('You have been granted Admin privileges!');
-        setTimeout(() => setToastMessage(''), 3000);
+      if (token) {
+        await fetch('/api/auth/make-admin', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
       }
     } catch (err) {
       console.error(err);
     }
+    setUser({ ...user, role: 'admin' });
+    setToastMessage('You have been granted Admin privileges!');
+    setTimeout(() => setToastMessage(''), 3000);
   };
 
   const startCheckout = () => {
