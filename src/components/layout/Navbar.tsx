@@ -31,43 +31,45 @@ const Navbar: React.FC<NavbarProps> = ({
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed w-full z-40 top-0 bg-stone-950/95 backdrop-blur-md border-b border-white/5">
+    <nav className="fixed w-full z-50 top-0 bg-stone-950/95 backdrop-blur-md border-b border-white/5">
       {/* Top info bar */}
-      <div className="bg-gradient-to-r from-stone-950 via-amber-950/40 to-stone-950 border-b border-amber-600/20 text-amber-300/80 py-1.5 px-4 text-[11px]">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-5">
-            <a href="tel:785238090" className="flex items-center gap-1.5 hover:text-amber-300 transition-colors font-mono">
-              <Phone size={11} /> Customer Care: <strong className="text-amber-300">785238090</strong>
+      <div className="bg-gradient-to-r from-stone-950 via-amber-950/40 to-stone-950 border-b border-amber-600/20 text-amber-300/90 py-1.5 px-3 sm:px-4 text-[10px] sm:text-[11px]">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-3 sm:gap-5 overflow-hidden">
+            <a href="tel:785238090" className="flex items-center gap-1 hover:text-amber-300 transition-colors font-mono whitespace-nowrap">
+              <Phone size={11} className="text-amber-400" />
+              <span className="hidden xs:inline">Call:</span>
+              <strong className="text-amber-300">785238090</strong>
             </a>
-            <span className="text-amber-800 hidden sm:block">|</span>
-            <a href="mailto:dharohar2026@gmail.com" className="hidden sm:flex items-center gap-1.5 hover:text-amber-300 transition-colors font-mono">
-              <Mail size={11} /> dharohar2026@gmail.com
+            <span className="text-amber-800/80 hidden xs:block">|</span>
+            <a href="mailto:dharohar2026@gmail.com" className="hidden sm:flex items-center gap-1.5 hover:text-amber-300 transition-colors font-mono truncate">
+              <Mail size={11} className="text-amber-400" /> dharohar2026@gmail.com
             </a>
           </div>
-          <span className="hidden md:block tracking-[0.2em] uppercase text-[10px] font-bold text-amber-600">
-            ✦ Complimentary Insured Express Delivery Across India ✦
+          <span className="tracking-[0.15em] sm:tracking-[0.2em] uppercase text-[9px] sm:text-[10px] font-bold text-amber-500 truncate">
+            ✦ Insured Express Delivery Across India ✦
           </span>
         </div>
       </div>
 
       {/* Main nav */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-[72px] gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-[72px] gap-2 sm:gap-4">
           {/* Logo */}
           <Link
             to="/"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex-shrink-0 flex items-center gap-3"
+            className="flex-shrink-0 flex items-center gap-2 sm:gap-3"
           >
             {!logoError ? (
               <img
                 src="1000114461.png"
                 alt="Dharohar"
-                className="h-12 w-auto object-contain rounded-xl border border-amber-500/30 shadow-[0_0_15px_rgba(217,119,6,0.2)]"
+                className="h-9 sm:h-11 md:h-12 w-auto object-contain rounded-lg border border-amber-500/30 shadow-[0_0_15px_rgba(217,119,6,0.2)]"
                 onError={() => setLogoError(true)}
               />
             ) : (
-              <span className="text-xl font-serif font-bold text-amber-400 tracking-widest uppercase">Dharohar</span>
+              <span className="text-lg sm:text-xl font-serif font-bold text-amber-400 tracking-widest uppercase">Dharohar</span>
             )}
           </Link>
 
@@ -101,26 +103,26 @@ const Navbar: React.FC<NavbarProps> = ({
                   document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className={`px-4 py-2 text-xs tracking-widest uppercase font-bold transition-all rounded-lg ${isActive('/') ? 'text-amber-400' : 'text-stone-400 hover:text-white hover:bg-white/5'}`}
+              className={`px-3 lg:px-4 py-2 text-xs tracking-widest uppercase font-bold transition-all rounded-lg ${isActive('/') ? 'text-amber-400' : 'text-stone-400 hover:text-white hover:bg-white/5'}`}
             >
               Collection ({productList.length})
             </Link>
             <Link
               to="/about"
-              className={`px-4 py-2 text-xs tracking-widest uppercase font-bold transition-all rounded-lg ${isActive('/about') ? 'text-amber-400' : 'text-stone-400 hover:text-white hover:bg-white/5'}`}
+              className={`px-3 lg:px-4 py-2 text-xs tracking-widest uppercase font-bold transition-all rounded-lg ${isActive('/about') ? 'text-amber-400' : 'text-stone-400 hover:text-white hover:bg-white/5'}`}
             >
               Our Story (About)
             </Link>
             <button
               onClick={() => handleOpenContactModal()}
-              className="ml-2 flex items-center gap-1.5 bg-amber-600/20 hover:bg-amber-600/30 text-amber-400 border border-amber-600/40 px-4 py-2 rounded-lg text-xs tracking-wider font-bold uppercase transition-all"
+              className="ml-2 flex items-center gap-1.5 bg-amber-600/20 hover:bg-amber-600/30 text-amber-400 border border-amber-600/40 px-3.5 py-2 rounded-lg text-xs tracking-wider font-bold uppercase transition-all"
             >
               <MessageSquare size={13} /> Customize
             </button>
           </div>
 
           {/* Right controls */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             {user ? (
               <div className="hidden md:flex items-center gap-3">
                 <span className="text-xs text-amber-400 font-medium flex items-center gap-2">
@@ -148,17 +150,18 @@ const Navbar: React.FC<NavbarProps> = ({
                 <User size={15} /> Sign In
               </button>
             )}
-            <button onClick={() => setIsCartOpen(true)} className="relative p-2.5 text-stone-400 hover:text-amber-400 transition-colors rounded-lg hover:bg-white/5">
+            <button onClick={() => setIsCartOpen(true)} className="relative p-2 sm:p-2.5 text-stone-400 hover:text-amber-400 transition-colors rounded-lg hover:bg-white/5">
               <ShoppingBag size={20} />
               {cartItemCount > 0 && (
-                <span className="absolute 1 top-1.5 right-1.5 w-4 h-4 bg-amber-500 text-stone-950 text-[9px] font-bold rounded-full flex items-center justify-center border border-stone-950">
+                <span className="absolute top-1 right-1 w-4 h-4 bg-amber-500 text-stone-950 text-[9px] font-bold rounded-full flex items-center justify-center border border-stone-950">
                   {cartItemCount}
                 </span>
               )}
             </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2.5 text-stone-400 hover:text-amber-400 transition-colors rounded-lg hover:bg-white/5"
+              className="md:hidden p-2 sm:p-2.5 text-stone-400 hover:text-amber-400 transition-colors rounded-lg hover:bg-white/5"
+              aria-label="Toggle Navigation Menu"
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -166,22 +169,22 @@ const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Search Bar (Mobile) */}
-        <div className="md:hidden pb-3">
+        <div className="md:hidden pb-2.5">
           <div className="relative">
             <input
               type="text"
-              placeholder="Search timepieces..."
+              placeholder="Search timepieces, monuments..."
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
                 if (location.pathname !== '/') navigate('/');
               }}
-              className="w-full bg-stone-900/80 border border-stone-800 focus:border-amber-500 rounded-lg py-2.5 pl-10 pr-4 text-xs text-white placeholder:text-stone-500 transition-all outline-none"
+              className="w-full bg-stone-900/90 border border-stone-800 focus:border-amber-500 rounded-lg py-2 pl-9 pr-8 text-xs text-white placeholder:text-stone-500 transition-all outline-none"
             />
-            <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-500" />
+            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-500" />
             {searchQuery && (
-              <button onClick={() => setSearchQuery('')} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-500 hover:text-amber-500">
-                <X size={14} />
+              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-500 hover:text-amber-500">
+                <X size={13} />
               </button>
             )}
           </div>
@@ -190,7 +193,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-stone-950/95 backdrop-blur-md border-b border-white/5 absolute w-full max-h-[80vh] overflow-y-auto">
+        <div className="md:hidden bg-stone-950/98 backdrop-blur-xl border-b border-white/10 absolute w-full max-h-[85vh] overflow-y-auto shadow-2xl z-50">
           <div className="px-4 py-4 space-y-2">
             <Link
               to="/"
@@ -201,14 +204,14 @@ const Navbar: React.FC<NavbarProps> = ({
                   document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className={`block px-4 py-3 text-xs tracking-widest uppercase font-bold transition-colors rounded-lg ${isActive('/') ? 'bg-white/5 text-amber-400' : 'text-stone-400 hover:bg-white/5 hover:text-white'}`}
+              className={`block px-4 py-3 text-xs tracking-widest uppercase font-bold transition-colors rounded-lg ${isActive('/') ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'text-stone-300 hover:bg-white/5 hover:text-white'}`}
             >
               Collection ({productList.length})
             </Link>
             <Link
               to="/about"
               onClick={() => { setIsMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              className={`block px-4 py-3 text-xs tracking-widest uppercase font-bold transition-colors rounded-lg ${isActive('/about') ? 'bg-white/5 text-amber-400' : 'text-stone-400 hover:bg-white/5 hover:text-white'}`}
+              className={`block px-4 py-3 text-xs tracking-widest uppercase font-bold transition-colors rounded-lg ${isActive('/about') ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'text-stone-300 hover:bg-white/5 hover:text-white'}`}
             >
               Our Story (About)
             </Link>

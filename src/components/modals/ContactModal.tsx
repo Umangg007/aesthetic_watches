@@ -16,7 +16,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, con
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-stone-950/80 backdrop-blur-md" onClick={onClose}></div>
-      <div className="relative w-full max-w-lg bg-stone-900 rounded-2xl border border-amber-600/40 shadow-[0_0_60px_rgba(217,119,6,0.2)] p-6 md:p-8 z-10">
+      <div className="relative w-full max-w-lg bg-stone-900 rounded-2xl border border-amber-600/40 shadow-[0_0_60px_rgba(217,119,6,0.2)] p-5 md:p-8 max-h-[90vh] overflow-y-auto z-10">
         <button onClick={onClose} className="absolute top-5 right-5 text-stone-400 hover:text-white transition-colors">
           <X size={22} />
         </button>

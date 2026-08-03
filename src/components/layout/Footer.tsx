@@ -96,11 +96,11 @@ const Footer: React.FC<FooterProps> = ({ logoError, productList, handleOpenConta
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-stone-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs">
-        <p className="text-amber-300/80 font-mono font-medium text-center md:text-left mb-4 md:mb-0 uppercase tracking-widest">
+      <div className="border-t border-stone-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs gap-4">
+        <p className="text-amber-300/80 font-mono font-medium text-center md:text-left uppercase tracking-widest text-[10px] sm:text-xs">
           &copy; 2026 Dharohar - Heritage Timepieces. All Rights Reserved.
         </p>
-        <div className="flex gap-6 text-stone-400 font-medium">
+        <div className="flex flex-wrap justify-center gap-4 text-stone-400 font-medium text-[11px] sm:text-xs">
           <span className="hover:text-amber-400 cursor-pointer">Insured Delivery</span>
           <span className="hover:text-amber-400 cursor-pointer">Warranty &amp; Care</span>
           <span className="hover:text-amber-400 cursor-pointer">Privacy Policy</span>

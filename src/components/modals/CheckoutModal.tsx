@@ -29,7 +29,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   return (
     <div className="fixed inset-0 z-[65] flex items-center justify-center p-4 overflow-y-auto">
       <div className="fixed inset-0 bg-stone-950/80 backdrop-blur-md" onClick={onClose}></div>
-      <div className="relative w-full max-w-2xl bg-stone-900 rounded-2xl border border-amber-600/30 shadow-[0_0_60px_rgba(217,119,6,0.15)] my-8 p-6 md:p-8 z-10">
+      <div className="relative w-full max-w-2xl bg-stone-900 rounded-2xl border border-amber-600/30 shadow-[0_0_60px_rgba(217,119,6,0.15)] my-auto p-5 md:p-8 max-h-[90vh] overflow-y-auto z-10">
         <div className="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
           <div>
             <h2 className="text-2xl font-serif text-white flex items-center gap-2"><Truck className="text-amber-500" /> Home Delivery Pipeline</h2>
