@@ -90,12 +90,12 @@ router.post('/login', async (req, res) => {
     if (mongoose.connection.readyState === 1) {
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: 'No account found with this email. Please click "Create Account" to register.' });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: 'Incorrect password. Please check your credentials.' });
       }
 
       const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d' });
@@ -114,12 +114,12 @@ router.post('/login', async (req, res) => {
       // In-memory fallback
       const user = globalStore.users.find(u => u.email === email);
       if (!user) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: 'No account found with this email. Please click "Create Account" to register.' });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: 'Incorrect password. Please check your credentials.' });
       }
 
       const token = jwt.sign({ id: user._id || user.id }, JWT_SECRET, { expiresIn: '7d' });

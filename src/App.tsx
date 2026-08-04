@@ -29,14 +29,24 @@ function MainLayout() {
   const isAdmin = location.pathname === '/admin';
 
   return (
-    <div className="min-h-screen bg-stone-950 font-sans selection:bg-amber-500/30 selection:text-amber-200">
-      {/* Global Notifications */}
-      {appState.toastMessage && (
-        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] bg-stone-900/90 backdrop-blur-md border border-amber-500/50 text-white px-6 py-3 rounded-full shadow-[0_0_40px_rgba(217,119,6,0.2)] text-sm font-bold flex items-center gap-3 animate-[fade-in-down_0.3s_ease-out]">
-          <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-          {appState.toastMessage}
-        </div>
-      )}
+    <div className="relative min-h-screen bg-stone-950 font-sans selection:bg-amber-500/30 selection:text-amber-200">
+      {/* Full-Page Background Image with Luxury Overlay */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed scale-105"
+          style={{ backgroundImage: "url('/palace_background.jpg')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/85 to-stone-950/95" />
+      </div>
+
+      <div className="relative z-10">
+        {/* Global Notifications */}
+        {appState.toastMessage && (
+          <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] bg-stone-900/90 backdrop-blur-md border border-amber-500/50 text-white px-6 py-3 rounded-full shadow-[0_0_40px_rgba(217,119,6,0.2)] text-sm font-bold flex items-center gap-3 animate-[fade-in-down_0.3s_ease-out]">
+            <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            {appState.toastMessage}
+          </div>
+        )}
 
       {/* Navigation Layer */}
       {!isAdmin && (
@@ -149,6 +159,7 @@ function MainLayout() {
           handleOpenContactModal={appState.handleOpenContactModal}
         />
       )}
+      </div>
     </div>
   );
 }
