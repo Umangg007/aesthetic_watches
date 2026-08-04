@@ -35,8 +35,12 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <main className="pt-[125px] sm:pt-[140px] md:pt-[150px] pb-0 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] sm:min-h-[75vh] flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-950/25 to-stone-950/95 pointer-events-none z-[1]" />
+      <section className="relative min-h-[70vh] sm:min-h-[75vh] flex flex-col items-center justify-center overflow-hidden bg-stone-950">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
+          style={{ backgroundImage: "url('/palace_background.jpg')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/75 via-stone-950/45 to-stone-950/95 pointer-events-none z-[1]" />
         <div className="relative z-[2] text-center max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
           <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
             <div className="hidden xs:block h-px w-6 sm:w-16 bg-gradient-to-r from-transparent to-amber-500" />
@@ -130,67 +134,110 @@ export const HomePage: React.FC<HomePageProps> = ({
         </section>
       )}
 
-      {/* Women's Highlight Showcase */}
-      {productList.filter(p => p.category === "Women's Collection").length >= 5 && (
-        <section className="relative z-10 py-16 sm:py-24 bg-stone-950">
-          <div className="absolute inset-0 bg-gradient-to-b from-stone-950 via-amber-900/5 to-stone-950 pointer-events-none" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12 sm:mb-16">
-              <span className="text-amber-400 tracking-[0.3em] sm:tracking-[0.4em] text-[10px] sm:text-xs font-bold uppercase font-mono">The Women's Collection</span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mt-2 sm:mt-3">Elegance & Heritage</h2>
-              <div className="h-px w-24 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mt-4 sm:mt-6" />
-            </div>
+      {/* Women's Showcase - Exclusive Watch: Meenakshi Kalyanam (Special Edition) */}
+      {(() => {
+        const meenakshiWatch = productList.find(p => p.id === 27 || p.name.includes("Meenakshi Kalyanam")) || productList.find(p => p.category === "Women's Collection");
+        if (!meenakshiWatch) return null;
 
-            <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
-              {/* Hero Women's Watch */}
-              <div className="lg:col-span-5 relative group cursor-pointer h-full flex flex-col" onClick={() => setZoomedImage(productList.find(p => p.id === 27)!)}>
-                <div className="relative flex-1 rounded-2xl overflow-hidden border border-amber-600/20 bg-stone-900/50 flex flex-col">
-                  <div className="flex-1 bg-stone-900 p-6 sm:p-8 flex items-center justify-center min-h-[260px]">
-                    <img src={productList.find(p => p.id === 27)?.image} alt="Meenakshi Kalyanam (Special Edition)" className="w-full max-h-[280px] sm:max-h-[350px] object-contain group-hover:scale-105 transition-transform duration-700 drop-shadow-2xl"
-                      onError={(e) => { (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231c1917'/%3E%3C/svg%3E"; }} />
-                  </div>
-                  <div className="bg-stone-950 p-5 sm:p-8 border-t border-amber-600/20">
-                    <span className="text-amber-500 text-[10px] uppercase tracking-[0.3em] font-bold mb-1.5 block">Featured Masterpiece</span>
-                    <h3 className="text-2xl sm:text-3xl font-serif text-white font-bold mb-2">{productList.find(p => p.id === 27)?.name}</h3>
-                    <p className="text-stone-300 text-xs sm:text-sm mb-5 line-clamp-2">{productList.find(p => p.id === 27)?.description}</p>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-amber-400 font-serif font-bold text-lg sm:text-xl">{productList.find(p => p.id === 27)?.priceStr}</span>
-                      <button onClick={(e) => { e.stopPropagation(); handleAddToCart(productList.find(p => p.id === 27)!); }} className="bg-amber-500 hover:bg-amber-400 text-stone-950 px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-lg shadow-amber-500/20 whitespace-nowrap">
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
+        return (
+          <section className="relative z-10 py-16 sm:py-28 overflow-hidden bg-stone-950 border-t border-stone-900">
+            <div className="absolute inset-0 bg-gradient-to-b from-stone-950 via-amber-950/10 to-stone-950 pointer-events-none" />
+            
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center gap-2 sm:gap-4 mb-12 sm:mb-16">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-600/30 to-transparent" />
+                <span className="text-amber-400 tracking-[0.25em] sm:tracking-[0.4em] text-[9px] sm:text-[11px] font-bold uppercase font-mono text-center">
+                  ✦ Exclusive Women's Collection ✦
+                </span>
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-600/30 to-transparent" />
               </div>
 
-              {/* 4 Supporting Women's Watches */}
-              <div className="lg:col-span-7 grid grid-cols-1 xs:grid-cols-2 gap-4 sm:gap-6">
-                {[26, 28, 29, 30].map(id => {
-                  const p = productList.find(x => x.id === id);
-                  if (!p) return null;
-                  return (
-                    <div key={p.id} className="group relative rounded-xl overflow-hidden border border-stone-800 hover:border-amber-600/30 bg-stone-900/80 cursor-pointer transition-colors flex flex-col" onClick={() => setZoomedImage(p)}>
-                      <div className="aspect-square overflow-hidden bg-stone-900 p-4 flex items-center justify-center">
-                        <img src={p.image} alt={p.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700 drop-shadow-xl" 
-                          onError={(e) => { (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='200' height='200' fill='%231c1917'/%3E%3C/svg%3E"; }}/>
-                      </div>
-                      <div className="p-3.5 sm:p-4 bg-stone-900/95 border-t border-stone-800 flex flex-col justify-between flex-1">
-                        <h4 className="text-white font-serif text-xs sm:text-sm font-bold truncate mb-2">{p.name}</h4>
-                        <div className="flex justify-between items-center gap-2">
-                          <span className="text-amber-400 text-xs font-bold">{p.priceStr}</span>
-                          <button onClick={(e) => { e.stopPropagation(); handleAddToCart(p); }} className="bg-stone-800 p-2 rounded hover:bg-amber-500 hover:text-stone-900 text-stone-300 transition-colors">
-                            <ShoppingBag size={14} />
-                          </button>
+              <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                {/* Watch Image */}
+                <div className="relative flex items-center justify-center min-h-[340px] sm:min-h-[460px]">
+                  <div className="absolute w-[280px] h-[280px] sm:w-[420px] sm:h-[420px] rounded-3xl bg-amber-500/10 blur-[70px]" />
+                  <div className="relative group cursor-pointer" onClick={() => setZoomedImage(meenakshiWatch)}>
+                    <div className="relative w-[280px] h-[280px] xs:w-[320px] xs:h-[320px] sm:w-[400px] sm:h-[400px] rounded-3xl overflow-hidden border-2 border-amber-500/30 shadow-[0_0_80px_rgba(217,119,6,0.22)] group-hover:shadow-[0_0_120px_rgba(217,119,6,0.35)] transition-all duration-700">
+                      <img
+                        src={meenakshiWatch.image}
+                        alt={meenakshiWatch.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%231c1917'/%3E%3C/svg%3E";
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-stone-950/0 group-hover:bg-stone-950/20 transition-all duration-300 flex items-end justify-center pb-6">
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-stone-950/85 backdrop-blur-sm border border-amber-500/40 px-4 py-2 rounded-full text-amber-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                          <ZoomIn size={12} /> View Full Detail
                         </div>
                       </div>
                     </div>
-                  );
-                })}
+                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-stone-950 border border-amber-500/40 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full shadow-[0_0_30px_rgba(217,119,6,0.25)] whitespace-nowrap">
+                      <span className="text-amber-400 font-serif font-bold text-lg sm:text-2xl">{meenakshiWatch.priceStr}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Watch Details */}
+                <div className="mt-8 lg:mt-0 text-center lg:text-left">
+                  <div className="flex items-center justify-center lg:justify-start gap-2 mb-3">
+                    <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
+                    <span className="text-amber-400 text-[10px] sm:text-xs font-mono uppercase tracking-[0.35em]">
+                      {meenakshiWatch.region} · Special Edition
+                    </span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white leading-tight mb-4 sm:mb-5">
+                    {meenakshiWatch.name}
+                  </h2>
+
+                  <div className="h-px w-20 bg-gradient-to-r from-amber-500 to-transparent mb-5 mx-auto lg:mx-0" />
+
+                  <p className="text-stone-300 text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0">
+                    {meenakshiWatch.description}
+                  </p>
+
+                  <div className="grid grid-cols-3 gap-2 sm:gap-4 py-4 sm:py-5 border-y border-stone-800 mb-6 sm:mb-8">
+                    {[
+                      { label: 'Edition', value: 'Special Edition' },
+                      { label: 'Strap', value: 'White Leather' },
+                      { label: 'Warranty', value: '2 Years' }
+                    ].map(s => (
+                      <div key={s.label} className="text-center">
+                        <div className="text-white font-bold text-xs sm:text-sm">{s.value}</div>
+                        <div className="text-stone-500 text-[9px] sm:text-[10px] uppercase tracking-wider mt-0.5">{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mb-8 justify-center lg:justify-start">
+                    {['Special Edition', "Women's Collection", 'White Leather Strap', 'Enamel Dial', 'Sapphire Glass'].map(tag => (
+                      <span key={tag} className="bg-stone-900 border border-stone-800 text-amber-300/80 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                    <button
+                      onClick={() => handleAddToCart(meenakshiWatch)}
+                      className="flex-1 bg-amber-500 hover:bg-amber-400 text-stone-950 py-3.5 sm:py-4 font-black uppercase tracking-[0.2em] text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(217,119,6,0.3)] rounded-lg"
+                    >
+                      <ShoppingBag size={16} /> Add to Cart
+                    </button>
+                    <button
+                      onClick={() => handleOpenContactModal(meenakshiWatch)}
+                      className="flex-1 bg-stone-900 hover:bg-stone-800 text-stone-200 border border-stone-700 hover:border-amber-600/50 py-3.5 sm:py-4 font-bold uppercase tracking-[0.2em] text-xs transition-all duration-300 flex items-center justify-center gap-2 rounded-lg"
+                    >
+                      <MessageSquare size={16} /> Bespoke Commission
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        );
+      })()}
 
       {/* Collection Grid */}
       <section id="collections" className="relative z-10 py-16 sm:py-24 px-3 sm:px-6">

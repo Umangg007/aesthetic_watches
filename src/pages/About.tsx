@@ -28,7 +28,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ handleOpenContactModal }) 
     <main className="pt-[125px] sm:pt-[140px] md:pt-[150px] pb-0 overflow-x-hidden">
       {/* Hero */}
       <section className="relative min-h-[65vh] sm:min-h-[70vh] flex items-center justify-center overflow-hidden bg-stone-950">
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105" style={{ backgroundImage: "url('palace_background.jpg')" }}></div>
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105" style={{ backgroundImage: "url('/palace_background.jpg')" }}></div>
         <div className="absolute inset-0 bg-gradient-to-b from-stone-950/70 via-stone-950/50 to-stone-950/90"></div>
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 pt-20 sm:pt-32 pb-16 sm:pb-20">
           <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
