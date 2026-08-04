@@ -35,9 +35,13 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <main className="pt-[125px] sm:pt-[140px] md:pt-[150px] pb-0 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] sm:min-h-[75vh] flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/30 to-stone-950/95 pointer-events-none z-[1]" />
-        <div className="relative z-[2] text-center max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+      <section className="relative min-h-screen -mt-[125px] sm:-mt-[140px] md:-mt-[150px] flex flex-col items-center justify-center overflow-hidden bg-stone-950">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
+          style={{ backgroundImage: "url('/palace_background.jpg')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-950/30 to-stone-950/95 pointer-events-none z-[1]" />
+        <div className="relative z-[2] text-center max-w-5xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-16 sm:pb-20">
           <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
             <div className="hidden xs:block h-px w-6 sm:w-16 bg-gradient-to-r from-transparent to-amber-500" />
             <span className="text-amber-400 tracking-[0.2em] sm:tracking-[0.35em] text-[10px] sm:text-[11px] font-bold uppercase font-mono">
