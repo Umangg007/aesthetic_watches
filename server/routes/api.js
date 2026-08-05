@@ -246,6 +246,10 @@ router.post('/orders', async (req, res) => {
       return res.status(201).json(orderObj);
     }
   } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 // Site Settings
 router.get('/settings', async (req, res) => {
   try {
@@ -298,4 +302,5 @@ router.put('/settings', adminAuth, async (req, res) => {
 });
 
 export default router;
+
 

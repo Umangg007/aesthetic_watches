@@ -22,11 +22,11 @@ const connectDB = async () => {
 
   const MONGODB_URI = process.env.MONGODB_URI;
   if (!MONGODB_URI) {
-    console.warn('Warning: MONGODB_URI environment variable is not set. Mongoose will attempt localhost.');
+    return;
   }
 
   try {
-    const db = await mongoose.connect(MONGODB_URI || 'mongodb://localhost:27017/dharohar', {
+    const db = await mongoose.connect(MONGODB_URI, {
       serverSelectionTimeoutMS: 5000
     });
     isConnected = db.connections[0].readyState === 1;
@@ -35,6 +35,7 @@ const connectDB = async () => {
     console.error('MongoDB connection error:', err.message);
   }
 };
+
 
 // Middleware to ensure DB connection before route execution
 app.use(async (req, res, next) => {
