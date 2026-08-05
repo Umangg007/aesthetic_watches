@@ -4,6 +4,7 @@ import { Product } from '../models/Product.js';
 import { Request } from '../models/Request.js';
 import { Order } from '../models/Order.js';
 import { User } from '../models/User.js';
+import { Settings } from '../models/Settings.js';
 import { adminAuth } from '../middleware/adminAuth.js';
 import { authUser } from '../middleware/auth.js';
 import { globalStore } from '../store.js';
@@ -245,8 +246,56 @@ router.post('/orders', async (req, res) => {
       return res.status(201).json(orderObj);
     }
   } catch (error) {
+// Site Settings
+router.get('/settings', async (req, res) => {
+  try {
+    if (mongoose.connection.readyState === 1) {
+      let settings = await Settings.findOne();
+      if (!settings) {
+        settings = await Settings.create({});
+      }
+      return res.json(settings);
+    } else {
+      if (!globalStore.settings) {
+        globalStore.settings = {
+          phone: '785238090',
+          email: 'dharohar2026@gmail.com',
+          announcement: '✦ Insured Express Delivery Across India ✦'
+        };
+      }
+      return res.json(globalStore.settings);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.put('/settings', adminAuth, async (req, res) => {
+  try {
+    const { phone, email, announcement } = req.body;
+    if (mongoose.connection.readyState === 1) {
+      let settings = await Settings.findOne();
+      if (!settings) {
+        settings = new Settings({ phone, email, announcement });
+      } else {
+        if (phone !== undefined) settings.phone = phone;
+        if (email !== undefined) settings.email = email;
+        if (announcement !== undefined) settings.announcement = announcement;
+      }
+      const updated = await settings.save();
+      return res.json(updated);
+    } else {
+      globalStore.settings = {
+        phone: phone ?? globalStore.settings.phone,
+        email: email ?? globalStore.settings.email,
+        announcement: announcement ?? globalStore.settings.announcement
+      };
+      return res.json(globalStore.settings);
+    }
+  } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
 export default router;
+

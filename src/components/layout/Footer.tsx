@@ -1,87 +1,93 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageSquare } from 'lucide-react';
-import type { Product } from '../../types';
+import type { Product, SiteSettings } from '../../types';
 
 interface FooterProps {
   logoError: boolean;
   productList: Product[];
   handleOpenContactModal: () => void;
+  siteSettings?: SiteSettings;
 }
 
-const Footer: React.FC<FooterProps> = ({ logoError, productList, handleOpenContactModal }) => (
-  <footer className="relative z-10 bg-stone-950/95 backdrop-blur-xl border-t border-amber-600/40 shadow-[0_-15px_40px_rgba(0,0,0,0.9)] pt-16 pb-12 text-stone-200">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-        {/* Brand */}
-        <div className="col-span-1 md:col-span-1">
-          {!logoError ? (
-            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img
-                src="1000114461.png"
-                alt="Dharohar"
-                className="h-28 w-auto mb-6 object-contain rounded-xl shadow-[0_0_30px_rgba(217,119,6,0.35)] border border-amber-500/40 cursor-pointer hover:scale-105 transition-transform duration-300"
-              />
-            </Link>
-          ) : (
-            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <h2 className="text-2xl font-serif font-bold text-amber-400 tracking-widest uppercase mb-6 cursor-pointer">
-                Dharohar
-              </h2>
-            </Link>
-          )}
-          <p className="text-stone-200 text-sm leading-relaxed font-medium">
-            Preserving the architectural legacy of India, one handcrafted luxury timepiece at a time.
-          </p>
-        </div>
+const Footer: React.FC<FooterProps> = ({ logoError, productList, handleOpenContactModal, siteSettings }) => {
+  const phone = siteSettings?.phone || '785238090';
+  const email = siteSettings?.email || 'dharohar2026@gmail.com';
 
-        {/* Navigation */}
-        <div>
-          <h4 className="text-amber-400 font-serif text-lg font-bold mb-6 border-b border-amber-500/20 pb-2">Explore Atelier</h4>
-          <ul className="space-y-3">
-            <li>
-              <Link
-                to="/"
-                onClick={() => setTimeout(() => document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' }), 100)}
-                className="text-stone-300 hover:text-amber-300 transition-colors text-sm font-medium block"
-              >
-                Heritage Watch Collection ({productList.length})
+  return (
+    <footer className="relative z-10 bg-stone-950/95 backdrop-blur-xl border-t border-amber-600/40 shadow-[0_-15px_40px_rgba(0,0,0,0.9)] pt-16 pb-12 text-stone-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
+          <div className="col-span-1 md:col-span-1">
+            {!logoError ? (
+              <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                <img
+                  src="1000114461.png"
+                  alt="Dharohar"
+                  className="h-28 w-auto mb-6 object-contain rounded-xl shadow-[0_0_30px_rgba(217,119,6,0.35)] border border-amber-500/40 cursor-pointer hover:scale-105 transition-transform duration-300"
+                />
               </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="text-stone-300 hover:text-amber-300 transition-colors text-sm font-medium block"
-              >
-                Our Story &amp; Craftsmanship
+            ) : (
+              <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                <h2 className="text-2xl font-serif font-bold text-amber-400 tracking-widest uppercase mb-6 cursor-pointer">
+                  Dharohar
+                </h2>
               </Link>
-            </li>
-            <li>
-              <button
-                onClick={() => handleOpenContactModal()}
-                className="text-amber-400 hover:text-white transition-colors text-sm font-bold flex items-center gap-1.5"
-              >
-                <MessageSquare size={14} /> Contact Us to Customize
-              </button>
-            </li>
-          </ul>
-        </div>
+            )}
+            <p className="text-stone-200 text-sm leading-relaxed font-medium">
+              Preserving the architectural legacy of India, one handcrafted luxury timepiece at a time.
+            </p>
+          </div>
 
-        {/* Contact */}
-        <div>
-          <h4 className="text-amber-400 font-serif text-lg font-bold mb-6 border-b border-amber-500/20 pb-2">Support &amp; Customer Care</h4>
-          <ul className="space-y-4">
-            <li className="flex items-center gap-3 text-stone-200 text-sm">
-              <span className="text-amber-500">📞</span>
-              <a href="tel:785238090" className="hover:text-amber-300">785238090</a>
-            </li>
-            <li className="flex items-center gap-3 text-stone-200 text-sm">
-              <span className="text-amber-500">✉️</span>
-              <a href="mailto:dharohar2026@gmail.com" className="hover:text-amber-300">dharohar2026@gmail.com</a>
-            </li>
-          </ul>
-        </div>
+          {/* Navigation */}
+          <div>
+            <h4 className="text-amber-400 font-serif text-lg font-bold mb-6 border-b border-amber-500/20 pb-2">Explore Atelier</h4>
+            <ul className="space-y-3">
+              <li>
+                <Link
+                  to="/"
+                  onClick={() => setTimeout(() => document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' }), 100)}
+                  className="text-stone-300 hover:text-amber-300 transition-colors text-sm font-medium block"
+                >
+                  Heritage Watch Collection ({productList.length})
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/about"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className="text-stone-300 hover:text-amber-300 transition-colors text-sm font-medium block"
+                >
+                  Our Story &amp; Craftsmanship
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleOpenContactModal()}
+                  className="text-amber-400 hover:text-white transition-colors text-sm font-bold flex items-center gap-1.5"
+                >
+                  <MessageSquare size={14} /> Contact Us to Customize
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-amber-400 font-serif text-lg font-bold mb-6 border-b border-amber-500/20 pb-2">Support &amp; Customer Care</h4>
+            <ul className="space-y-4">
+              <li className="flex items-center gap-3 text-stone-200 text-sm font-mono">
+                <span className="text-amber-500 font-sans">📞</span>
+                <a href={`tel:${phone}`} className="hover:text-amber-300">{phone}</a>
+              </li>
+              <li className="flex items-center gap-3 text-stone-200 text-sm font-mono">
+                <span className="text-amber-500 font-sans">✉️</span>
+                <a href={`mailto:${email}`} className="hover:text-amber-300">{email}</a>
+              </li>
+            </ul>
+          </div>
+
 
         {/* Guarantee */}
         <div>
@@ -115,6 +121,7 @@ const Footer: React.FC<FooterProps> = ({ logoError, productList, handleOpenConta
       </div>
     </div>
   </footer>
-);
+  );
+};
 
 export default Footer;

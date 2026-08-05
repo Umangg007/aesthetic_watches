@@ -3,8 +3,8 @@ import { Plus, Trash2, Phone, Mail, X, TrendingUp, Users, ShoppingBag, MessageSq
 import { Link, useNavigate } from 'react-router-dom';
 import { categories } from '../data/products';
 
-export const AdminDashboard = ({ productList, setProductList, customizationRequests }: any) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'requests' | 'users'>('overview');
+export const AdminDashboard = ({ productList, setProductList, customizationRequests, siteSettings, updateSiteSettings, setToastMessage }: any) => {
+  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'requests' | 'users' | 'settings'>('overview');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
@@ -14,6 +14,38 @@ export const AdminDashboard = ({ productList, setProductList, customizationReque
   const [formData, setFormData] = useState({
     name: '', description: '', price: 0, image: '1000113140.jpg', region: '', category: 'Ancient Architecture'
   });
+  
+  const [settingsForm, setSettingsForm] = useState({
+    phone: siteSettings?.phone || '785238090',
+    email: siteSettings?.email || 'dharohar2026@gmail.com',
+    announcement: siteSettings?.announcement || '✦ Insured Express Delivery Across India ✦'
+  });
+
+  useEffect(() => {
+    if (siteSettings) {
+      setSettingsForm({
+        phone: siteSettings.phone || '785238090',
+        email: siteSettings.email || 'dharohar2026@gmail.com',
+        announcement: siteSettings.announcement || '✦ Insured Express Delivery Across India ✦'
+      });
+    }
+  }, [siteSettings]);
+
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
+
+  const handleSaveSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingSettings(true);
+    if (updateSiteSettings) {
+      const success = await updateSiteSettings(settingsForm);
+      if (success && setToastMessage) {
+        setToastMessage('Site settings updated successfully!');
+        setTimeout(() => setToastMessage(''), 3000);
+      }
+    }
+    setIsSavingSettings(false);
+  };
+
   
   const navigate = useNavigate();
 
@@ -208,7 +240,15 @@ export const AdminDashboard = ({ productList, setProductList, customizationReque
           >
             <Users size={18} /> Users
           </button>
+
+          <button 
+            onClick={() => { setActiveTab('settings'); setIsSidebarOpen(false); }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${activeTab === 'settings' ? 'bg-amber-500/10 text-amber-400' : 'text-stone-400 hover:text-stone-200 hover:bg-stone-900'}`}
+          >
+            <Settings size={18} /> Site Settings
+          </button>
         </nav>
+
 
         <div className="p-4 border-t border-stone-800/50">
           <Link to="/" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-stone-400 hover:text-white hover:bg-stone-900 transition-all duration-300">
@@ -475,8 +515,75 @@ export const AdminDashboard = ({ productList, setProductList, customizationReque
               )}
             </div>
           )}
+
+          {activeTab === 'settings' && (
+            <div className="animate-[fade-in-up_0.4s_ease-out] max-w-4xl mx-auto">
+              <div className="mb-6 md:mb-8 mt-2 md:mt-0">
+                <h2 className="text-2xl md:text-3xl font-serif text-white">Site & Contact Settings</h2>
+                <p className="text-sm md:text-base text-stone-400 mt-2">Manage customer support contact details and header announcement text.</p>
+              </div>
+
+              <div className="bg-stone-900/40 backdrop-blur-md border border-stone-800/50 rounded-2xl p-6 md:p-8 space-y-6 shadow-2xl">
+                <form onSubmit={handleSaveSettings} className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono uppercase tracking-wider text-amber-400 flex items-center gap-2 font-bold">
+                      <Phone size={15} /> Contact Phone Number
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={settingsForm.phone}
+                      onChange={(e) => setSettingsForm({ ...settingsForm, phone: e.target.value })}
+                      className="w-full bg-stone-950 border border-stone-800 rounded-xl p-3.5 text-white font-mono text-sm focus:outline-none focus:border-amber-500 transition-colors"
+                      placeholder="e.g. 785238090"
+                    />
+                    <p className="text-[11px] text-stone-500">Displayed in top bar header, mobile drawer menu, footer, and contact modal.</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono uppercase tracking-wider text-amber-400 flex items-center gap-2 font-bold">
+                      <Mail size={15} /> Support Email Address
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={settingsForm.email}
+                      onChange={(e) => setSettingsForm({ ...settingsForm, email: e.target.value })}
+                      className="w-full bg-stone-950 border border-stone-800 rounded-xl p-3.5 text-white font-mono text-sm focus:outline-none focus:border-amber-500 transition-colors"
+                      placeholder="e.g. dharohar2026@gmail.com"
+                    />
+                    <p className="text-[11px] text-stone-500">Used for customer support inquiries and contact links.</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono uppercase tracking-wider text-amber-400 flex items-center gap-2 font-bold">
+                      <TrendingUp size={15} /> Top Announcement Banner Text
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={settingsForm.announcement}
+                      onChange={(e) => setSettingsForm({ ...settingsForm, announcement: e.target.value })}
+                      className="w-full bg-stone-950 border border-stone-800 rounded-xl p-3.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-colors"
+                      placeholder="e.g. ✦ Insured Express Delivery Across India ✦"
+                    />
+                    <p className="text-[11px] text-stone-500">Top announcement text displayed across the header top bar.</p>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSavingSettings}
+                    className="bg-amber-500 hover:bg-amber-400 text-stone-950 px-6 py-3.5 rounded-xl font-bold text-sm shadow-[0_0_20px_rgba(245,158,11,0.2)] transition-all hover:scale-105 active:scale-95 disabled:opacity-50 flex items-center gap-2"
+                  >
+                    {isSavingSettings ? 'Saving Settings...' : 'Save Site Settings'}
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
         </div>
       </main>
+
 
       {/* Premium Slide-out Side Panel for Edit/Add Modal */}
       {isModalOpen && (

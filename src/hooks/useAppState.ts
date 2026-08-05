@@ -2,18 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { defaultProducts } from '../data/products';
 import type {
   Product, CartItem, User, ShippingAddress, Order,
-  ContactForm, AuthFormData, Page, PaymentMethod, AuthTab, ViewAngle
+  ContactForm, AuthFormData, Page, PaymentMethod, AuthTab, ViewAngle, SiteSettings
 } from '../types';
 
 export function useAppState() {
   // ── Navigation ──────────────────────────────────────────────────────────────
   const [activePage, setActivePage] = useState<Page>('home');
 
+  // ── Site Settings ────────────────────────────────────────────────────────────
+  const [siteSettings, setSiteSettings] = useState<SiteSettings>({
+    phone: '785238090',
+    email: 'dharohar2026@gmail.com',
+    announcement: '✦ Insured Express Delivery Across India ✦'
+  });
+
   // ── Products & Requests (Backend connected) ───────────────────────────────
   const [productList, setProductList] = useState<Product[]>(defaultProducts);
   const [customizationRequests, setCustomizationRequests] = useState<any[]>([]);
   
   useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/settings');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && (data.phone || data.email || data.announcement)) {
+            setSiteSettings({
+              phone: data.phone || '785238090',
+              email: data.email || 'dharohar2026@gmail.com',
+              announcement: data.announcement || '✦ Insured Express Delivery Across India ✦'
+            });
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching site settings:', err);
+      }
+    };
+
     const fetchProducts = async () => {
       try {
         const res = await fetch('/api/products');
@@ -62,9 +87,37 @@ export function useAppState() {
       }
     };
 
+    fetchSettings();
     fetchProducts();
     fetchRequests();
   }, []);
+
+  const updateSiteSettings = async (newSettings: Partial<SiteSettings>) => {
+    try {
+      const token = localStorage.getItem('dharohar_token');
+      const res = await fetch('/api/settings', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(newSettings)
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setSiteSettings({
+          phone: updated.phone || siteSettings.phone,
+          email: updated.email || siteSettings.email,
+          announcement: updated.announcement || siteSettings.announcement
+        });
+        return true;
+      }
+    } catch (err) {
+      console.error('Error updating site settings:', err);
+    }
+    return false;
+  };
+
 
   // ── UI State ─────────────────────────────────────────────────────────────────
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -400,6 +453,8 @@ export function useAppState() {
     placedOrder,
     userOrders,
     isOrdersModalOpen, setIsOrdersModalOpen,
+    // Settings
+    siteSettings, updateSiteSettings,
     // Handlers
     handleOpenContactModal,
     handleContactSubmit,
@@ -412,3 +467,4 @@ export function useAppState() {
     handleCompleteOrder,
   };
 }
+

@@ -78,3 +78,9 @@ export type Page = 'home' | 'about' | 'admin';
 export type PaymentMethod = 'upi' | 'card' | 'netbanking' | 'cod';
 export type AuthTab = 'login' | 'signup';
 export type ViewAngle = 'front' | 'side' | 'back' | 'strap';
+
+export interface SiteSettings {
+  phone: string;
+  email: string;
+  announcement: string;
+}

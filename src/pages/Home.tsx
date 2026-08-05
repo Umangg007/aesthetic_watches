@@ -250,7 +250,11 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="flex flex-col md:flex-row gap-4 sm:gap-6 justify-between items-center mb-8 sm:mb-12">
             <div className="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start w-full md:w-auto">
               {categories.map(cat => (
-                <button key={cat} onClick={() => { setActiveCategory(cat); setCurrentPage(1); }}
+                <button key={cat} onClick={() => {
+                  setActiveCategory(cat);
+                  setCurrentPage(1);
+                  document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+                }}
                   className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all border ${activeCategory === cat ? 'bg-amber-500 text-stone-950 border-amber-500' : 'bg-stone-900/80 text-stone-400 border-stone-800 hover:border-amber-600/50 hover:text-white'}`}>
                   {cat}
                 </button>
@@ -306,12 +310,46 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex justify-center gap-2 mt-10 sm:mt-12">
+            <div className="flex items-center justify-center gap-2 mt-10 sm:mt-12">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => {
+                  if (currentPage > 1) {
+                    setCurrentPage(currentPage - 1);
+                    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-stone-900 border border-stone-800 text-stone-400 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              >
+                Prev
+              </button>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                <button key={page} onClick={() => setCurrentPage(page)} className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full text-xs sm:text-sm font-bold transition-all ${currentPage === page ? 'bg-amber-500 text-stone-950' : 'bg-stone-800 text-stone-400 hover:text-white'}`}>{page}</button>
+                <button
+                  key={page}
+                  onClick={() => {
+                    setCurrentPage(page);
+                    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full text-xs sm:text-sm font-bold transition-all ${currentPage === page ? 'bg-amber-500 text-stone-950 shadow-[0_0_15px_rgba(245,158,11,0.4)]' : 'bg-stone-900 border border-stone-800 text-stone-400 hover:text-white hover:border-amber-600/50'}`}
+                >
+                  {page}
+                </button>
               ))}
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => {
+                  if (currentPage < totalPages) {
+                    setCurrentPage(currentPage + 1);
+                    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-stone-900 border border-stone-800 text-stone-400 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              >
+                Next
+              </button>
             </div>
           )}
+
         </div>
       </section>
 

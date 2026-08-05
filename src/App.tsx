@@ -64,6 +64,7 @@ function MainLayout() {
           searchQuery={appState.searchQuery}
           setSearchQuery={appState.setSearchQuery}
           handleLogout={appState.handleLogout}
+          siteSettings={appState.siteSettings}
         />
       )}
 
@@ -78,6 +79,9 @@ function MainLayout() {
                 productList={appState.productList}
                 setProductList={appState.setProductList}
                 customizationRequests={appState.customizationRequests}
+                siteSettings={appState.siteSettings}
+                updateSiteSettings={appState.updateSiteSettings}
+                setToastMessage={appState.setToastMessage}
               />
             ) : (
               <div className="min-h-screen pt-24 flex flex-col items-center justify-center text-white bg-stone-950">
@@ -106,6 +110,7 @@ function MainLayout() {
         setContactForm={appState.setContactForm}
         handleContactSubmit={appState.handleContactSubmit}
         productList={appState.productList}
+        siteSettings={appState.siteSettings}
       />
 
       <AuthModal
@@ -157,8 +162,10 @@ function MainLayout() {
           logoError={appState.logoError}
           productList={appState.productList}
           handleOpenContactModal={appState.handleOpenContactModal}
+          siteSettings={appState.siteSettings}
         />
       )}
+
       </div>
     </div>
   );

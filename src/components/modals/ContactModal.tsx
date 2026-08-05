@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Phone, Mail, Send } from 'lucide-react';
-import type { Product, ContactForm } from '../../types';
+import type { Product, ContactForm, SiteSettings } from '../../types';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -9,10 +9,14 @@ interface ContactModalProps {
   setContactForm: (f: ContactForm) => void;
   handleContactSubmit: (e: React.FormEvent) => void;
   productList: Product[];
+  siteSettings?: SiteSettings;
 }
 
-export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, contactForm, setContactForm, handleContactSubmit, productList }) => {
+export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, contactForm, setContactForm, handleContactSubmit, productList, siteSettings }) => {
   if (!isOpen) return null;
+  const phone = siteSettings?.phone || '785238090';
+  const email = siteSettings?.email || 'dharohar2026@gmail.com';
+
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-stone-950/80 backdrop-blur-md" onClick={onClose}></div>
@@ -25,15 +29,16 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, con
           <p className="text-stone-400 text-xs mt-1 mb-4">Want to customize a watch? Send your bespoke request directly to our master artisans.</p>
         </div>
         <div className="bg-stone-950 p-3 rounded-xl border border-amber-600/30 flex flex-wrap justify-around text-xs text-stone-300 gap-2 mb-6">
-          <a href="tel:785238090" className="flex items-center gap-1.5 hover:text-amber-400">
+          <a href={`tel:${phone}`} className="flex items-center gap-1.5 hover:text-amber-400">
             <Phone size={14} className="text-amber-500" />
-            <span>Customer Care: <strong className="text-white font-mono">785238090</strong></span>
+            <span>Customer Care: <strong className="text-white font-mono">{phone}</strong></span>
           </a>
-          <a href="mailto:dharohar2026@gmail.com" className="flex items-center gap-1.5 hover:text-amber-400">
+          <a href={`mailto:${email}`} className="flex items-center gap-1.5 hover:text-amber-400">
             <Mail size={14} className="text-amber-500" />
-            <span>Email: <strong className="text-white font-mono">dharohar2026@gmail.com</strong></span>
+            <span>Email: <strong className="text-white font-mono">{email}</strong></span>
           </a>
         </div>
+
         <form onSubmit={handleContactSubmit} className="space-y-4">
           <div>
             <label className="block text-xs uppercase tracking-wider text-stone-400 mb-1">Your Full Name</label>
